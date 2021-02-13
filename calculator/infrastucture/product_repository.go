@@ -5,7 +5,7 @@ import (
 	log "github.com/sirupsen/logrus"
 
 	"github.com/arangodb/go-driver"
-	"github.com/snathale/challenge-hash/calculator/src/domain/entity"
+	"github.com/snathale/challenge-hash/calculator/domain/entity"
 )
 
 var GetProductDocumentError = errors.New("impossible read a product")

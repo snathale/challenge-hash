@@ -1,7 +1,7 @@
 package entity
 
 import (
-	"github.com/snathale/challenge-hash/calculator/src/utc_time"
+	"github.com/snathale/challenge-hash/calculator/utc_time"
 )
 
 type Product struct {

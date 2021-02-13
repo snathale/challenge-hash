@@ -5,7 +5,7 @@ import (
 	"time"
 
 	. "github.com/onsi/gomega"
-	"github.com/snathale/challenge-hash/calculator/src/utc_time"
+	"github.com/snathale/challenge-hash/calculator/utc_time"
 )
 
 func TestUser(t *testing.T) {

@@ -4,7 +4,7 @@ import (
 	"github.com/arangodb/go-driver"
 	"github.com/pkg/errors"
 	log "github.com/sirupsen/logrus"
-	"github.com/snathale/challenge-hash/calculator/src/domain/entity"
+	"github.com/snathale/challenge-hash/calculator/domain/entity"
 )
 
 var GetUserDocumentError = errors.New("impossible read a user")
