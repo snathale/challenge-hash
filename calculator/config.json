@@ -1,0 +1,16 @@
+{
+    "database": {
+        "port": 8529,
+        "password": "dummy_passowrd",
+        "database": "dummy_discount_db",
+        "host": "http://arangodb.svc",
+        "user": "root",
+        "user_collection_name": "user",
+        "product_collection_name": "product"
+    },
+    "grpc_server": {
+        "port": 3000,
+        "host": "calculator.svc"
+    },
+    "logLevel": 4
+}

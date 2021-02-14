@@ -1,0 +1,5 @@
+{"_id": "user-collection/1","_key": "1", "first_name":"Steve","last_name":"Jobs","date_of_birth":"2000-06-01T01:05:49Z"}
+{"_id": "user-collection/2","_key": "2", "first_name":"Bill","last_name":"Gates","date_of_birth":"2014-04-23T01:05:49Z"}
+{"_id": "user-collection/3","_key": "3", "first_name":"Michael","last_name":"Jordan","date_of_birth":"1992-09-31T01:05:49Z"}
+{"_id": "user-collection/4","_key": "4", "first_name":"Michael","last_name":"Jackson","date_of_birth":"1968-03-15T01:05:49Z"}
+{"_id": "user-collection/5","_key": "5", "first_name":"Celine","last_name":"Dion","date_of_birth":"2005-11-05T01:05:49Z"}

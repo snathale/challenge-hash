@@ -1,0 +1,10 @@
+{"_id": "product-collection/1","_key": "1", "price_in_cents":9999,"title":"Iphone 12 Pro","description":"The newest model phone pro"}
+{"_id": "product-collection/2","_key": "2", "price_in_cents":10999,"title":"Iphone 12 Pro Max","description":"The newest model phone pro max"}
+{"_id": "product-collection/3","_key": "3", "price_in_cents":7999,"title":"Iphone 12","description":"The newest model iphone"}
+{"_id": "product-collection/4","_key": "4", "price_in_cents":6999,"title":"Iphone 12 Mini","description":"The newest model iphone mini"}
+{"_id": "product-collection/5","_key": "5", "price_in_cents":3699,"title":"Iphone SE","description":"The newest model iphone se"}
+{"_id": "product-collection/6","_key": "6", "price_in_cents":5699,"title":"Iphone 11","description":"The older model iphone"}
+{"_id": "product-collection/7","_key": "7", "price_in_cents":799000,"title":"Iphone XR","description":"The oldest model iphone"}
+{"_id": "product-collection/8","_key": "8", "price_in_cents":2349,"title":"AirPods","description":"The apple airpods"}
+{"_id": "product-collection/9","_key": "9", "price_in_cents":2999,"title":"AirPods Pro","description":"The apple airpods pro"}
+{"_id": "product-collection/10","_key": "10", "price_in_cents":799000,"title":"AirPods Pro Max","description":"The apple airpods pro max"}

@@ -1,11 +1,13 @@
-package infrastucture
+package test_helper
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/arangodb/go-driver"
 	"github.com/arangodb/go-driver/http"
 	. "github.com/onsi/gomega"
+	"github.com/snathale/challenge-hash/calculator/utc_time"
 )
 
 const DBHOST = "http://localhost"
@@ -65,4 +67,10 @@ func CreateDocument(g *GomegaWithT, coll driver.Collection, doc interface{}) dri
 	meta, err := coll.CreateDocument(nil, doc)
 	g.Expect(err).ShouldNot(HaveOccurred())
 	return meta
+}
+
+func ReplaceDate(date time.Time) {
+	utc_time.Reset(func() time.Time {
+		return date
+	})
 }

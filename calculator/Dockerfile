@@ -8,4 +8,4 @@ COPY ./ /opt/app/
 RUN go mod tidy
 RUN go build -o ./ ./
 
-ENTRYPOINT ["/opt/app/calcultor", "run"]
+ENTRYPOINT ["/opt/app/calculator", "run"]

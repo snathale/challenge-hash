@@ -4,18 +4,19 @@ import (
 	"testing"
 
 	. "github.com/onsi/gomega"
+	"github.com/snathale/challenge-hash/calculator/test_helper"
 )
 
 func TestDb(t *testing.T) {
 	g := NewGomegaWithT(t)
 	config := mockDBConfig()
-	defer DeleteDatabase(g, config.Database)
+	defer test_helper.DeleteDatabase(g, config.Database)
 	repository, err := NewRepositories(config)
 	g.Expect(err).ShouldNot(HaveOccurred())
 	g.Expect(repository.db).ShouldNot(BeNil())
-	g.Expect(repository.productRepository).ShouldNot(BeNil())
-	g.Expect(repository.userRepository).ShouldNot(BeNil())
-	client := GetArangoClient(g)
+	g.Expect(repository.ProductRepository).ShouldNot(BeNil())
+	g.Expect(repository.UserRepository).ShouldNot(BeNil())
+	client := test_helper.GetArangoClient(g)
 	g.Expect(client.DatabaseExists(nil, config.Database)).Should(BeTrue())
 	db, err := client.Database(nil, config.Database)
 	g.Expect(err).ShouldNot(HaveOccurred())

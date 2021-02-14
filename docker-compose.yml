@@ -1,0 +1,39 @@
+version: "3.8"
+
+services:
+  calculator:
+    build: ./calculator
+    restart: always
+    ports: 
+      - "3000:3000"
+    networks: 
+      back:
+        aliases: 
+          - "calculator.svc"
+    depends_on: 
+      - arango
+
+
+  arango:
+    image: arangodb:3.7.6
+    ports:
+      - "8529:8529"
+    volumes:
+      - arango_data_vol:/var/lib/arangodb3
+      - ./arango:/opt/tools
+    environment:
+      ARANGO_ROOT_PASSWORD: "dummy_passowrd"
+      ARANGO_STORAGE_ENGINE: rocksdb
+    networks:
+      back:
+        aliases:
+          - "arangodb.svc"
+
+volumes:
+  arango_data_vol:
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
+
+networks:
+  back:

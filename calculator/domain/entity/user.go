@@ -13,8 +13,8 @@ type User struct {
 	Birthday  time.Time `json:"date_of_birth"`
 }
 
-func NewUser(firstName, lastName string, birthday time.Time) User {
-	return User{
+func NewUser(firstName, lastName string, birthday time.Time) *User {
+	return &User{
 		Id:        "",
 		FirstName: firstName,
 		LastName:  lastName,

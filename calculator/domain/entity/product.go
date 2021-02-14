@@ -11,8 +11,8 @@ type Product struct {
 	Description  string `json:"description"`
 }
 
-func NewProduct(title, description string, price int) Product {
-	return Product{
+func NewProduct(title, description string, price int) *Product {
+	return &Product{
 		Id:           "",
 		PriceInCents: price,
 		Title:        title,
@@ -25,7 +25,7 @@ func isBlackFriday() bool {
 	return today.Day() == 25 && today.Month() == 11
 }
 
-func (p *Product) getDiscount(user User) float32 {
+func (p *Product) GetDiscount(user User) float32 {
 	if isBlackFriday() {
 		return 0.1
 	}

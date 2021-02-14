@@ -22,8 +22,8 @@ var (
 )
 
 type Repository struct {
-	userRepository    repository.UserRepository
-	productRepository repository.ProductRespository
+	UserRepository    repository.UserRepository
+	ProductRepository repository.ProductRespository
 	db                driver.Database
 }
 
@@ -75,7 +75,8 @@ func getDatabase(c driver.Client, name string) (driver.Database, error) {
 			return nil, ArangoDBDatabaseCreateError
 		}
 	}
-	if db, err = c.Database(nil, name); err != nil {
+	db, err = c.Database(nil, name)
+	if err != nil {
 		log.WithError(err).Warning(ArangoDBDatabaseGetError)
 		return nil, ArangoDBDatabaseGetError
 	}
@@ -96,7 +97,8 @@ func getCollection(db driver.Database, name string) (driver.Collection, error) {
 		}
 		return coll, nil
 	}
-	if coll, err = db.Collection(nil, name); err != nil {
+	coll, err = db.Collection(nil, name)
+	if err != nil {
 		log.WithError(err).Warning(ArangoDBCollectionGetError)
 		return nil, ArangoDBCollectionGetError
 	}

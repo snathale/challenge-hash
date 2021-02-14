@@ -1,0 +1,515 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>application: Go Coverage Report</title>
+		<style>
+			body {
+				background: black;
+				color: rgb(80, 80, 80);
+			}
+			body, pre, #legend span {
+				font-family: Menlo, monospace;
+				font-weight: bold;
+			}
+			#topbar {
+				background: black;
+				position: fixed;
+				top: 0; left: 0; right: 0;
+				height: 42px;
+				border-bottom: 1px solid rgb(80, 80, 80);
+			}
+			#content {
+				margin-top: 50px;
+			}
+			#nav, #legend {
+				float: left;
+				margin-left: 10px;
+			}
+			#legend {
+				margin-top: 12px;
+			}
+			#nav {
+				margin-top: 10px;
+			}
+			#legend span {
+				margin: 0 5px;
+			}
+			.cov0 { color: rgb(192, 0, 0) }
+.cov1 { color: rgb(128, 128, 128) }
+.cov2 { color: rgb(116, 140, 131) }
+.cov3 { color: rgb(104, 152, 134) }
+.cov4 { color: rgb(92, 164, 137) }
+.cov5 { color: rgb(80, 176, 140) }
+.cov6 { color: rgb(68, 188, 143) }
+.cov7 { color: rgb(56, 200, 146) }
+.cov8 { color: rgb(44, 212, 149) }
+.cov9 { color: rgb(32, 224, 152) }
+.cov10 { color: rgb(20, 236, 155) }
+
+		</style>
+	</head>
+	<body>
+		<div id="topbar">
+			<div id="nav">
+				<select id="files">
+				
+				<option value="file0">github.com/snathale/challenge-hash/calculator/application/application.go (71.4%)</option>
+				
+				<option value="file1">github.com/snathale/challenge-hash/calculator/application/config.go (0.0%)</option>
+				
+				<option value="file2">github.com/snathale/challenge-hash/calculator/application/controller/controller.go (71.4%)</option>
+				
+				<option value="file3">github.com/snathale/challenge-hash/calculator/application/controller/discount.go (100.0%)</option>
+				
+				<option value="file4">github.com/snathale/challenge-hash/calculator/domain/entity/product.go (100.0%)</option>
+				
+				<option value="file5">github.com/snathale/challenge-hash/calculator/domain/entity/user.go (100.0%)</option>
+				
+				<option value="file6">github.com/snathale/challenge-hash/calculator/infrastucture/db.go (53.3%)</option>
+				
+				<option value="file7">github.com/snathale/challenge-hash/calculator/infrastucture/product_repository.go (100.0%)</option>
+				
+				<option value="file8">github.com/snathale/challenge-hash/calculator/infrastucture/user_repository.go (100.0%)</option>
+				
+				</select>
+			</div>
+			<div id="legend">
+				<span>not tracked</span>
+			
+				<span class="cov0">no coverage</span>
+				<span class="cov1">low coverage</span>
+				<span class="cov2">*</span>
+				<span class="cov3">*</span>
+				<span class="cov4">*</span>
+				<span class="cov5">*</span>
+				<span class="cov6">*</span>
+				<span class="cov7">*</span>
+				<span class="cov8">*</span>
+				<span class="cov9">*</span>
+				<span class="cov10">high coverage</span>
+			
+			</div>
+		</div>
+		<div id="content">
+		
+		<pre class="file" id="file0" style="display: none">package application
+
+import (
+        "github.com/pkg/errors"
+
+        "github.com/sirupsen/logrus"
+        "github.com/snathale/challenge-hash/calculator/application/controller"
+        "github.com/snathale/challenge-hash/calculator/infrastucture"
+        "github.com/snathale/challenge-hash/calculator/interface/server"
+)
+
+var (
+        ApplicationGrpcNewServerError = errors.New("impossible create grpc server")
+        ApplicationRepositoryError    = errors.New("impossible create repository")
+        ApplicationControllerError    = errors.New("impossible create controller")
+)
+
+type Application struct {
+        grpcServer server.Server
+        controller controller.Controller
+}
+
+func NewApp(config *Config) (*Application, error) <span class="cov8" title="1">{
+        var grpcServer *server.Server
+        var err error
+        var rep *infrastucture.Repository
+        if rep, err = infrastucture.NewRepositories(config.Db); err != nil </span><span class="cov0" title="0">{
+                logrus.WithError(err).Warning(ApplicationRepositoryError)
+                return nil, ApplicationRepositoryError
+        }</span>
+        <span class="cov8" title="1">ctrl := controller.NewController(rep)
+        if grpcServer, err = server.NewServer(config.Server, *ctrl); err != nil </span><span class="cov0" title="0">{
+                logrus.WithError(err).Warning(ApplicationGrpcNewServerError)
+                return nil, ApplicationGrpcNewServerError
+        }</span>
+        <span class="cov8" title="1">return &amp;Application{
+                grpcServer: *grpcServer,
+                controller: *ctrl,
+        }, nil</span>
+}
+
+func (a *Application) Run() &lt;-chan error <span class="cov8" title="1">{
+        logrus.Info("app run")
+        return a.grpcServer.Run()
+}</span>
+
+func (a *Application) Close() <span class="cov8" title="1">{
+        a.grpcServer.Close()
+}</span>
+</pre>
+		
+		<pre class="file" id="file1" style="display: none">package application
+
+import (
+        "encoding/json"
+        "os"
+
+        "github.com/snathale/challenge-hash/calculator/infrastucture"
+        "github.com/snathale/challenge-hash/calculator/interface/server"
+)
+
+type Config struct {
+        Db       infrastucture.Config `json:"database"`
+        Server   server.Config        `json:"grpc_server"`
+        LogLevel int                  `json:"logLevel"`
+}
+
+func NewConfigFile(filename string) error <span class="cov0" title="0">{
+        var config Config
+        err := generateConfigFile(filename, config)
+        if err != nil </span><span class="cov0" title="0">{
+                return err
+        }</span>
+        <span class="cov0" title="0">return nil</span>
+}
+
+func generateConfigFile(filename string, config Config) error <span class="cov0" title="0">{
+        file, err := os.Create(filename)
+        if err != nil </span><span class="cov0" title="0">{
+                return err
+        }</span>
+        <span class="cov0" title="0">data, err := json.Marshal(config)
+        if err != nil </span><span class="cov0" title="0">{
+                return err
+        }</span>
+        <span class="cov0" title="0">_, err = file.Write(data)
+        if err != nil </span><span class="cov0" title="0">{
+                return err
+        }</span>
+        <span class="cov0" title="0">return nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file2" style="display: none">package controller
+
+import (
+        "github.com/pkg/errors"
+
+        "github.com/sirupsen/logrus"
+        "github.com/snathale/challenge-hash/calculator/infrastucture"
+)
+
+var (
+        CalculateDiscountControllerUserError    = errors.New("impossible restore user")
+        CalculateDiscountControllerProductError = errors.New("impossible restore product")
+)
+
+type Controller struct {
+        repository *infrastucture.Repository
+}
+
+func NewController(repository *infrastucture.Repository) *Controller <span class="cov1" title="1">{
+        return &amp;Controller{
+                repository: repository,
+        }
+}</span>
+
+func (c *Controller) CalculateDiscount(userId, producId string) (*Discount, error) <span class="cov10" title="3">{
+        user, err := c.repository.UserRepository.GetUserById(userId)
+        if err != nil </span><span class="cov0" title="0">{
+                logrus.WithError(err).Warning(CalculateDiscountControllerUserError)
+                return nil, err
+        }</span>
+        <span class="cov10" title="3">product, err := c.repository.ProductRepository.GetProductById(producId)
+        if err != nil </span><span class="cov0" title="0">{
+                logrus.WithError(err).Warning(CalculateDiscountControllerProductError)
+                return nil, err
+        }</span>
+        <span class="cov10" title="3">percentage := product.GetDiscount(*user)
+        if percentage != 0 </span><span class="cov6" title="2">{
+                value := (product.PriceInCents) - int(float32(product.PriceInCents)*percentage)
+                return NewProductDiscount(*product, percentage, value), nil
+        }</span>
+        <span class="cov1" title="1">return NewProductDiscount(*product, percentage, product.PriceInCents), nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file3" style="display: none">package controller
+
+import "github.com/snathale/challenge-hash/calculator/domain/entity"
+
+type Discount struct {
+        Percentage   float32
+        ValueInCents int
+}
+
+func NewProductDiscount(product entity.Product, percentage float32, value_in_cents int) *Discount <span class="cov10" title="3">{
+        return &amp;Discount{
+                Percentage:   percentage,
+                ValueInCents: value_in_cents,
+        }
+}</span>
+</pre>
+		
+		<pre class="file" id="file4" style="display: none">package entity
+
+import (
+        "github.com/snathale/challenge-hash/calculator/utc_time"
+)
+
+type Product struct {
+        Id           string `json:"_key,omitempty"`
+        PriceInCents int    `json:"price_of_cents"`
+        Title        string `json:"title"`
+        Description  string `json:"description"`
+}
+
+func NewProduct(title, description string, price int) *Product <span class="cov9" title="5">{
+        return &amp;Product{
+                Id:           "",
+                PriceInCents: price,
+                Title:        title,
+                Description:  description,
+        }
+}</span>
+
+func isBlackFriday() bool <span class="cov10" title="6">{
+        today := utc_time.Now()
+        return today.Day() == 25 &amp;&amp; today.Month() == 11
+}</span>
+
+func (p *Product) GetDiscount(user User) float32 <span class="cov7" title="4">{
+        if isBlackFriday() </span><span class="cov4" title="2">{
+                return 0.1
+        }</span>
+        <span class="cov4" title="2">if user.isBirthday() </span><span class="cov1" title="1">{
+                return 0.05
+        }</span>
+        <span class="cov1" title="1">return 0</span>
+}
+</pre>
+		
+		<pre class="file" id="file5" style="display: none">package entity
+
+import (
+        "time"
+
+        "github.com/snathale/challenge-hash/calculator/utc_time"
+)
+
+type User struct {
+        Id        string    `json:"_key,omitempty"`
+        FirstName string    `json:"first_name"`
+        LastName  string    `json:"last_name"`
+        Birthday  time.Time `json:"date_of_birth"`
+}
+
+func NewUser(firstName, lastName string, birthday time.Time) *User <span class="cov10" title="7">{
+        return &amp;User{
+                Id:        "",
+                FirstName: firstName,
+                LastName:  lastName,
+                Birthday:  birthday,
+        }
+}</span>
+
+func (u *User) isBirthday() bool <span class="cov7" title="4">{
+        today := utc_time.Now()
+        return today.Day() == u.Birthday.Day() &amp;&amp; today.Month() == u.Birthday.Month()
+}</span>
+</pre>
+		
+		<pre class="file" id="file6" style="display: none">package infrastucture
+
+import (
+        "fmt"
+
+        "github.com/arangodb/go-driver"
+        "github.com/arangodb/go-driver/http"
+        "github.com/pkg/errors"
+        log "github.com/sirupsen/logrus"
+        "github.com/snathale/challenge-hash/calculator/domain/repository"
+)
+
+var (
+        ArangoDBConnectionError       = errors.New("impossible connect to arangoDb")
+        ArangoDBClientConnectionError = errors.New("impossible client connect to arangoDb")
+        ArangoDBDatabaseExistError    = errors.New("impossible check database exists")
+        ArangoDBDatabaseCreateError   = errors.New("impossible create database")
+        ArangoDBDatabaseGetError      = errors.New("impossible retreive database")
+        ArangoDBCollectionExistError  = errors.New("impossible check collection exist")
+        ArangoDBCollectionCreateError = errors.New("impossible create collection")
+        ArangoDBCollectionGetError    = errors.New("impossible retrieve collection")
+)
+
+type Repository struct {
+        UserRepository    repository.UserRepository
+        ProductRepository repository.ProductRespository
+        db                driver.Database
+}
+
+func NewRepositories(config Config) (*Repository, error) <span class="cov1" title="1">{
+        conn, err := http.NewConnection(http.ConnectionConfig{
+                Endpoints: []string{fmt.Sprintf("%s:%d", config.Host, config.Port)},
+        })
+        if err != nil </span><span class="cov0" title="0">{
+                log.WithError(err).Warning(ArangoDBConnectionError)
+                return nil, ArangoDBConnectionError
+        }</span>
+        <span class="cov1" title="1">client, err := driver.NewClient(driver.ClientConfig{
+                Connection:     conn,
+                Authentication: driver.BasicAuthentication(config.User, config.Password),
+        })
+        if err != nil </span><span class="cov0" title="0">{
+                log.WithError(err).Warning(ArangoDBClientConnectionError)
+                return nil, ArangoDBClientConnectionError
+        }</span>
+        <span class="cov1" title="1">var db driver.Database
+        if db, err = getDatabase(client, config.Database); err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+        <span class="cov1" title="1">var productColl driver.Collection
+        if productColl, err = getCollection(db, config.ProductCollectionName); err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+        <span class="cov1" title="1">var userColl driver.Collection
+        if userColl, err = getCollection(db, config.UserCollectionName); err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+        <span class="cov1" title="1">return &amp;Repository{
+                UserRepository:    NewUserRepository(userColl),
+                ProductRepository: NewProductRepository(productColl),
+                db:                db,
+        }, nil</span>
+}
+
+func getDatabase(c driver.Client, name string) (driver.Database, error) <span class="cov1" title="1">{
+        dbExist, err := c.DatabaseExists(nil, name)
+        if err != nil </span><span class="cov0" title="0">{
+                log.WithError(err).Warning(ArangoDBDatabaseExistError)
+                return nil, ArangoDBDatabaseExistError
+        }</span>
+        <span class="cov1" title="1">var db driver.Database
+        if !dbExist </span><span class="cov1" title="1">{
+                if db, err = c.CreateDatabase(nil, name, nil); err != nil </span><span class="cov0" title="0">{
+                        log.WithError(err).Warning(ArangoDBDatabaseCreateError)
+                        return nil, ArangoDBDatabaseCreateError
+                }</span>
+        }
+        <span class="cov1" title="1">if db, err = c.Database(nil, name); err != nil </span><span class="cov0" title="0">{
+                log.WithError(err).Warning(ArangoDBDatabaseGetError)
+                return nil, ArangoDBDatabaseGetError
+        }</span>
+        <span class="cov1" title="1">return db, nil</span>
+}
+
+func getCollection(db driver.Database, name string) (driver.Collection, error) <span class="cov10" title="2">{
+        collExist, err := db.CollectionExists(nil, name)
+        if err != nil </span><span class="cov0" title="0">{
+                log.WithError(err).Warning(ArangoDBCollectionExistError)
+                return nil, ArangoDBCollectionExistError
+        }</span>
+        <span class="cov10" title="2">var coll driver.Collection
+        if !collExist </span><span class="cov10" title="2">{
+                if coll, err = db.CreateCollection(nil, name, nil); err != nil </span><span class="cov0" title="0">{
+                        log.WithError(err).Warning(ArangoDBCollectionCreateError)
+                        return nil, ArangoDBCollectionCreateError
+                }</span>
+                <span class="cov10" title="2">return coll, nil</span>
+        }
+        <span class="cov0" title="0">if coll, err = db.Collection(nil, name); err != nil </span><span class="cov0" title="0">{
+                log.WithError(err).Warning(ArangoDBCollectionGetError)
+                return nil, ArangoDBCollectionGetError
+        }</span>
+        <span class="cov0" title="0">return coll, nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file7" style="display: none">package infrastucture
+
+import (
+        "github.com/pkg/errors"
+        log "github.com/sirupsen/logrus"
+
+        "github.com/arangodb/go-driver"
+        "github.com/snathale/challenge-hash/calculator/domain/entity"
+)
+
+var GetProductDocumentError = errors.New("impossible read a product")
+
+type ProductArangoDB struct {
+        collection driver.Collection
+}
+
+func NewProductRepository(coll driver.Collection) *ProductArangoDB <span class="cov10" title="3">{
+        return &amp;ProductArangoDB{collection: coll}
+}</span>
+
+func (p *ProductArangoDB) GetProductById(id string) (*entity.Product, error) <span class="cov6" title="2">{
+        var product entity.Product
+        _, err := p.collection.ReadDocument(nil, id, &amp;product)
+        if err != nil </span><span class="cov1" title="1">{
+                log.WithError(err).Warning(GetProductDocumentError)
+                return nil, GetProductDocumentError
+        }</span>
+        <span class="cov1" title="1">return &amp;product, nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file8" style="display: none">package infrastucture
+
+import (
+        "github.com/arangodb/go-driver"
+        "github.com/pkg/errors"
+        log "github.com/sirupsen/logrus"
+        "github.com/snathale/challenge-hash/calculator/domain/entity"
+)
+
+var GetUserDocumentError = errors.New("impossible read a user")
+
+type UserArangoDB struct {
+        collection driver.Collection
+}
+
+func NewUserRepository(coll driver.Collection) *UserArangoDB <span class="cov10" title="3">{
+        return &amp;UserArangoDB{collection: coll}
+}</span>
+
+func (p *UserArangoDB) GetUserById(id string) (*entity.User, error) <span class="cov6" title="2">{
+        var user entity.User
+        _, err := p.collection.ReadDocument(nil, id, &amp;user)
+        if err != nil </span><span class="cov1" title="1">{
+                log.WithError(err).Warning(GetUserDocumentError)
+                return nil, GetUserDocumentError
+        }</span>
+        <span class="cov1" title="1">return &amp;user, nil</span>
+}
+</pre>
+		
+		</div>
+	</body>
+	<script>
+	(function() {
+		var files = document.getElementById('files');
+		var visible;
+		files.addEventListener('change', onChange, false);
+		function select(part) {
+			if (visible)
+				visible.style.display = 'none';
+			visible = document.getElementById(part);
+			if (!visible)
+				return;
+			files.value = part;
+			visible.style.display = 'block';
+			location.hash = part;
+		}
+		function onChange() {
+			select(files.value);
+			window.scrollTo(0, 0);
+		}
+		if (location.hash != "") {
+			select(location.hash.substr(1));
+		}
+		if (!visible) {
+			select("file0");
+		}
+	})();
+	</script>
+</html>
