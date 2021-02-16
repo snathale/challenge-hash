@@ -6,7 +6,7 @@ import (
 
 	. "github.com/onsi/gomega"
 	"github.com/snathale/challenge-hash/calculator/domain/entity"
-	"github.com/snathale/challenge-hash/calculator/infrastucture"
+	"github.com/snathale/challenge-hash/calculator/infrastructure"
 	"github.com/snathale/challenge-hash/calculator/test_helper"
 )
 
@@ -22,7 +22,7 @@ func TestController(t *testing.T) {
 		Description:  "smartphone apple",
 	}
 	productMeta := test_helper.CreateDocument(g, productColl, doc)
-	rep, err := infrastucture.NewRepositories(mockDBConfig())
+	rep, err := infrastructure.NewRepositories(mockDBConfig())
 	g.Expect(err).ShouldNot(HaveOccurred())
 	ctrl := NewController(rep)
 	t.Run("validate receive a discount 0.1 when is blackFriday", func(t *testing.T) {
@@ -69,8 +69,8 @@ func TestController(t *testing.T) {
 	})
 }
 
-func mockDBConfig() infrastucture.Config {
-	return infrastucture.Config{
+func mockDBConfig() infrastructure.Config {
+	return infrastructure.Config{
 		Port:                  8529,
 		Password:              "dummy_passowrd",
 		Database:              "dummy_test_controller",

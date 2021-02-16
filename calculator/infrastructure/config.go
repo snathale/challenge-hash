@@ -1,4 +1,4 @@
-package infrastucture
+package infrastructure
 
 type Config struct {
 	Port                  int    `mapstructure:"port"`

@@ -4,14 +4,14 @@ import (
 	"encoding/json"
 	"os"
 
-	"github.com/snathale/challenge-hash/calculator/infrastucture"
+	"github.com/snathale/challenge-hash/calculator/infrastructure"
 	"github.com/snathale/challenge-hash/calculator/interface/server"
 )
 
 type Config struct {
-	Db       infrastucture.Config `mapstructure:"database"`
-	Server   server.Config        `mapstructure:"grpc_server"`
-	LogLevel int                  `mapstructure:"logLevel"`
+	Db       infrastructure.Config `mapstructure:"database"`
+	Server   server.Config         `mapstructure:"grpc_server"`
+	LogLevel int                   `mapstructure:"logLevel"`
 }
 
 func NewConfigFile(filename string) error {

@@ -3,7 +3,7 @@ package application
 import (
 	"github.com/sirupsen/logrus"
 	"github.com/snathale/challenge-hash/calculator/application/controller"
-	"github.com/snathale/challenge-hash/calculator/infrastucture"
+	"github.com/snathale/challenge-hash/calculator/infrastructure"
 	"github.com/snathale/challenge-hash/calculator/interface/server"
 )
 
@@ -15,8 +15,8 @@ type Application struct {
 func NewApp(config *Config) (*Application, error) {
 	var grpcServer *server.Server
 	var err error
-	var rep *infrastucture.Repository
-	if rep, err = infrastucture.NewRepositories(config.Db); err != nil {
+	var rep *infrastructure.Repository
+	if rep, err = infrastructure.NewRepositories(config.Db); err != nil {
 		return nil, err
 	}
 	ctrl := controller.NewController(rep)

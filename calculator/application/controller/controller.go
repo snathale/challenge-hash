@@ -1,14 +1,12 @@
 package controller
 
-import (
-	"github.com/snathale/challenge-hash/calculator/infrastucture"
-)
+import "github.com/snathale/challenge-hash/calculator/infrastructure"
 
 type controller struct {
-	repository *infrastucture.Repository
+	repository *infrastructure.Repository
 }
 
-func NewController(repository *infrastucture.Repository) Controller {
+func NewController(repository *infrastructure.Repository) Controller {
 	return &controller{
 		repository: repository,
 	}

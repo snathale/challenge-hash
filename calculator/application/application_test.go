@@ -8,7 +8,7 @@ import (
 
 	. "github.com/onsi/gomega"
 	"github.com/snathale/challenge-hash/calculator/domain/entity"
-	"github.com/snathale/challenge-hash/calculator/infrastucture"
+	"github.com/snathale/challenge-hash/calculator/infrastructure"
 	"github.com/snathale/challenge-hash/calculator/interface/proto"
 	"github.com/snathale/challenge-hash/calculator/interface/server"
 	"github.com/snathale/challenge-hash/calculator/test_helper"
@@ -90,7 +90,7 @@ func TestApplication(t *testing.T) {
 
 func mockConfig() *Config {
 	return &Config{
-		Db: infrastucture.Config{
+		Db: infrastructure.Config{
 			Port:                  8529,
 			Password:              "dummy_passowrd",
 			Database:              "dummy_test_app",

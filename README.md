@@ -2,7 +2,7 @@
 
 **Recrutadora**: July Demenjon
 
-**Cadidato**: Nathale Silva
+**Cadidata**: Nathale Silva
 
 **Contato**: silva.nathale@gmail.com
 
