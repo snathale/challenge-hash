@@ -1,18 +1,10 @@
 package application
 
 import (
-	"github.com/pkg/errors"
-
 	"github.com/sirupsen/logrus"
 	"github.com/snathale/challenge-hash/calculator/application/controller"
 	"github.com/snathale/challenge-hash/calculator/infrastucture"
 	"github.com/snathale/challenge-hash/calculator/interface/server"
-)
-
-var (
-	ApplicationGrpcNewServerError = errors.New("impossible create grpc server")
-	ApplicationRepositoryError    = errors.New("impossible create repository")
-	ApplicationControllerError    = errors.New("impossible create controller")
 )
 
 type Application struct {
@@ -25,17 +17,15 @@ func NewApp(config *Config) (*Application, error) {
 	var err error
 	var rep *infrastucture.Repository
 	if rep, err = infrastucture.NewRepositories(config.Db); err != nil {
-		logrus.WithError(err).Warning(ApplicationRepositoryError)
-		return nil, ApplicationRepositoryError
+		return nil, err
 	}
 	ctrl := controller.NewController(rep)
-	if grpcServer, err = server.NewServer(config.Server, *ctrl); err != nil {
-		logrus.WithError(err).Warning(ApplicationGrpcNewServerError)
-		return nil, ApplicationGrpcNewServerError
+	if grpcServer, err = server.NewServer(config.Server, ctrl); err != nil {
+		return nil, err
 	}
 	return &Application{
 		grpcServer: *grpcServer,
-		controller: *ctrl,
+		controller: ctrl,
 	}, nil
 }
 

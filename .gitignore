@@ -15,6 +15,7 @@
 # vendor/
 .vscode
 calculator/vendor
+calculator/test
 calculator/go.sum
 product-list/vendor
 product-list/.idea
