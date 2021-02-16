@@ -13,6 +13,36 @@ services:
     depends_on: 
       - arango
 
+  ngnix:
+    image: nginx
+    ports:
+      - "8080:80"
+    volumes:
+      - ./ngnix/default.conf:/etc/nginx/conf.d/default.conf
+      - ./product-list:/opt/app
+    networks:
+      back:
+        aliases: 
+          - "product.svc"
+    depends_on:
+      - product-list 
+       
+  product-list:
+    build: ./fpm
+    entrypoint: ["php-fpm"]
+    working_dir: /opt/app
+    ports: 
+      - "9000"
+    volumes: 
+      - ./product-list:/opt/app
+    env_file:
+      - ./product-list/.env.example 
+    networks: 
+      back:
+        aliases: 
+          - "php-fpm"
+    depends_on: 
+      - arango
 
   arango:
     image: arangodb:3.7.6
@@ -23,7 +53,7 @@ services:
       - ./arango:/opt/tools
     environment:
       ARANGO_ROOT_PASSWORD: "dummy_passowrd"
-      ARANGO_STORAGE_ENGINE: rocksdb
+      ARANGO_STORAGE_ENGINE: rocksdb 
     networks:
       back:
         aliases:

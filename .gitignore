@@ -16,4 +16,8 @@
 .vscode
 calculator/vendor
 calculator/go.sum
+product-list/vendor
+product-list/.idea
+product-list/.vscode
+product-list/logs
 .DS_STORE
