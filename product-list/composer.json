@@ -23,7 +23,10 @@
     },
     "config": {
         "process-timeout": 0,
-        "sort-packages": true
+        "sort-packages": true,
+        "github-oauth": {
+            "github.com": "XXXXXX"
+        }
     },
     "autoload": {
         "psr-4": {

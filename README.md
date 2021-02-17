@@ -9,12 +9,14 @@
 #### Requisitos
 
 * [Docker-compose](https://docs.docker.com/compose/install/)
+* [GitHub Token](https://github.com/settings/tokens)
 
 #### Arquitetura do projeto
 
-Na construção dos serviços abaixo descritos, utilizou-se uma arquitetura baseada em camadas, de modo que possibilite a manutenção, bem como a inserção de novos recursos a aplicação. 
-Como requisitos foram desenvolvidos 2 microserviços, utilizando gRPC como padrão de comunicação entre estes. 
-Um microserviço foi desenvolvido utilizando Golang e o segundo utilizando PHP, como tecnologia de banco de dados foi utilizado o [ArangoDB](https://www.arangodb.com).
+Na construção dos serviços abaixo descritos, utilizou-se uma arquitetura baseada em camadas, de modo que possibilite a
+manutenção, bem como a inserção de novos recursos a aplicação. Como requisitos foram desenvolvidos 2 microserviços,
+utilizando gRPC como padrão de comunicação entre estes. Um microserviço foi desenvolvido utilizando Golang e o segundo
+utilizando PHP, como tecnologia de banco de dados foi utilizado o [ArangoDB](https://www.arangodb.com).
 
 **product-list**: Api RESTFUL responsável por receber requisições para retornar uma lista de produtos com discontos.
 
@@ -23,11 +25,20 @@ de gRPC.
 
 **arangoDB**: Serviço de banco de dados noSql responsável por armazenar informações dos produtos e usuários.
 
-
 #### Iniciando a aplicação
 
-Após clonar o projeto em sua máquina, com os requisitos já instalados e estando na raiz do projeto, executar um arquivo
-bash com o seguinte comando:
+Após clonar o projeto em sua máquina, com os requisitos já atendidos, configure o token de
+acesso do github no arquivo ```composer.json``` que está no dentro do diretório ```/product-list```, alterando o
+seguinte valor:
+
+```
+{
+  "github-oauth": {
+    "github.com": "XXXXXX"
+  }
+}
+```
+Em seguida estando na raiz do projeto execute arquivo bash com o seguinte comando:
 
 ```shell script
     /bin/bash init.sh
@@ -41,10 +52,10 @@ Observações:
 
 * Para o serviço de cálculo de desconto ```/calculator``` as configurações de host, porta e conexão com o banco de dados
   são informadas pelo arquivo de configuração **config.json** localizado dentro do projeto.
-* Para a API RESTFUL ```/product-list``` as configurações de host, porta e conexão com o banco de dados são informadas pelo arquivo de
-  configuração **.env.example** localizado dentro do projeto.
-* Uma vez executado o comando que faz o build dos dois serviços, caso deseje parar os serviços e 
-  executá-los novamente não se faz mais necessário utilizar o mesmo comando, basta utilizar: ```docker-compose up ```
+* Para a API RESTFUL ```/product-list``` as configurações de host, porta e conexão com o banco de dados são informadas
+  pelo arquivo de configuração **.env.example** localizado dentro do projeto.
+* Uma vez executado o comando que faz o build dos dois serviços, caso deseje parar os serviços e executá-los novamente
+  não se faz mais necessário utilizar o mesmo comando, basta utilizar: ```docker-compose up ```
 
 #### Rota
 
@@ -62,7 +73,7 @@ Exemplo:
 
 ```curl -H "X-USER-ID: 1" -X GET 'localhost:8080/product'```
 
-##### Respostas
+##### Resposta
 
 + **Success** 200
 
@@ -96,6 +107,7 @@ Para o serviço de cálculo de desconto, é necessário entrar no respositório 
 
 ```make run-tests```
 
-Para o serviço de listagem de produtos com descontos, é necessário entrar no repositório ```/product-list``` e executar o seguinte comando:
+Para o serviço de listagem de produtos com descontos, é necessário entrar no repositório ```/product-list``` e executar
+o seguinte comando:
 
 ```make run-tests```
