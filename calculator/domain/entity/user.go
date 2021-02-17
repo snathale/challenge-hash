@@ -1,6 +1,7 @@
 package entity
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/snathale/challenge-hash/calculator/utc_time"
@@ -23,6 +24,7 @@ func NewUser(firstName, lastName string, birthday time.Time) *User {
 }
 
 func (u *User) isBirthday() bool {
+	fmt.Println(time.Now())
 	today := utc_time.Now()
 	return today.Day() == u.Birthday.Day() && today.Month() == u.Birthday.Month()
 }

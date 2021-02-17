@@ -26,5 +26,5 @@ func (c *controller) CalculateDiscount(userId, producId string) (*Discount, erro
 		value := (product.PriceInCents) - int(float32(product.PriceInCents)*percentage)
 		return NewProductDiscount(percentage, value), nil
 	}
-	return NewProductDiscount(percentage, product.PriceInCents), nil
+	return NewProductDiscount(0, 0), nil
 }

@@ -68,7 +68,7 @@ class TestHelper
         $handler = new CollectionHandler($this->connection);
         try {
             if ($handler->has($name)) {
-                $handler->truncate($name);
+                $handler->drop($name);
             }
             $collection = new Collection($name);
             $handler->create($collection);

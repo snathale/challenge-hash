@@ -91,7 +91,7 @@ class ApplicationTest extends TestCase
                     'description' => 'apple smartphone',
                     'discount' => [
                         'percentage' => 0,
-                        'value_in_cents' => 3000
+                        'value_in_cents' => 0
                     ]
                 ],
                 [
@@ -101,7 +101,7 @@ class ApplicationTest extends TestCase
                     'description' => 'apple notebook',
                     'discount' => [
                         'percentage' => 0,
-                        'value_in_cents' => 6000
+                        'value_in_cents' => 0
                     ]
                 ]
             ]

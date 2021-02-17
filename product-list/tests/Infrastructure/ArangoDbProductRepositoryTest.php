@@ -7,7 +7,6 @@ namespace Tests\Infrastructure;
 use Api\Domain\Entity\Product;
 use Api\Infrastructure\ArangoDb\ArangoDbProductRepository;
 use Api\Infrastructure\ArangoDb\ProductCollection;
-use ArangoDBClient\Document;
 use Monolog\Logger;
 use PHPUnit\Framework\TestCase;
 use Tests\Test_helper\TestHelper;

@@ -65,7 +65,7 @@ func TestController(t *testing.T) {
 		discount, err := ctrl.CalculateDiscount(userMeta.Key, productMeta.Key)
 		g.Expect(err).ShouldNot(HaveOccurred())
 		g.Expect(discount.Percentage).To(Equal(float32(0)))
-		g.Expect(discount.ValueInCents).To(Equal(3000))
+		g.Expect(discount.ValueInCents).To(Equal(0))
 	})
 }
 

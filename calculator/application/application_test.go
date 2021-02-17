@@ -84,7 +84,7 @@ func TestApplication(t *testing.T) {
 		})
 		g.Expect(err).ShouldNot(HaveOccurred())
 		g.Expect(discount.Percentage).To(Equal(float32(0)))
-		g.Expect(discount.ValueInCents).To(Equal(int32(6999)))
+		g.Expect(discount.ValueInCents).To(Equal(int32(0)))
 	})
 }
 
