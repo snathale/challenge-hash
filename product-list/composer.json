@@ -25,7 +25,7 @@
         "process-timeout": 0,
         "sort-packages": true,
         "github-oauth": {
-            "github.com": "XXXXXX"
+            "github.com": "d994ebddfdb57b119ca997f48f9d4b436ff6bd8d"
         }
     },
     "autoload": {

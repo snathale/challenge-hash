@@ -9,6 +9,8 @@ WORKDIR /opt/app
 
 RUN apt-get update && apt-get install -y git
 
+RUN apt-get install zip unzip
+
 RUN apt-get install -y autoconf zlib1g-dev
 
 RUN pecl install grpc
