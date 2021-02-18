@@ -63,6 +63,13 @@ func CreateDatabase(g *GomegaWithT, name string) driver.Database {
 	return db
 }
 
+func GetDatabase(g *GomegaWithT, name string) driver.Database {
+	c := GetArangoClient(g)
+	db, err := c.Database(nil, name)
+	g.Expect(err).ShouldNot(HaveOccurred())
+	return db
+}
+
 func CreateDocument(g *GomegaWithT, coll driver.Collection, doc interface{}) driver.DocumentMeta {
 	meta, err := coll.CreateDocument(nil, doc)
 	g.Expect(err).ShouldNot(HaveOccurred())

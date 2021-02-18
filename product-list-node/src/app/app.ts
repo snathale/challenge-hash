@@ -20,7 +20,6 @@ export default class App {
             databaseName: config.dbName,
             auth: { username: config.user, password: config.password },
         }
-        console.log(config)
         this.repository = new productRepository(new Database(db), config.collectionName)
     }
 
