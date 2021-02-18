@@ -44,6 +44,20 @@ services:
     depends_on: 
       - arango
 
+  product-list-node:
+    build: ./product-list-node
+    restart: always
+    ports: 
+     - "3333:3333"
+    env_file: ./product-list-node/.env.example
+    networks: 
+      back:
+        aliases: 
+          - "product-list.node.svc"
+    depends_on: 
+     - arango
+     - calculator
+
   arango:
     image: arangodb:3.7.6
     ports:

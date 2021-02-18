@@ -21,4 +21,7 @@ product-list/vendor
 product-list/.idea
 product-list/.vscode
 product-list/logs
+product-list-node/node_modules
+product-list-node/tests
+product-list-node/package-lock.json
 .DS_STORE
