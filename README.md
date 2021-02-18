@@ -161,7 +161,7 @@ curl -H "X-USER-ID: 1" -X GET 'localhost:3333/product'
 } 
 ```
 
-#### Executando testes
+## Executando testes
 
 **Requisitos**
 
@@ -178,7 +178,7 @@ make run-tests
 Observação:
 * Estes comando também executará um teste de integração com o a api desenvolvida em NodeJS, logo a stack docker 
   correspondente deve estar em pé, para isto, basta seguir o processo de inicialização desta stack, descrita a cima na 
-  sessão de inicialização do servico **product-list-node** 
+  sessão de inicialização do serviço **product-list-node** 
 
 
 Para o serviço de listagem de produtos com descontos desenvolvido em PHP, é necessário entrar no repositório ```/product-list``` e executar
@@ -191,4 +191,4 @@ make run-tests
 Observação:
 * Estes comando executará testes de integração com o a api desenvolvida em PHP, logo a stack docker
   correspondente deve estar em pé, para isto, basta seguir o processo de inicialização desta stack, descrita a cima na
-  sessão de inicialização do servico **product-list** 
+  sessão de inicialização do serviço **product-list** 
