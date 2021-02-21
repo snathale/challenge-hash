@@ -12,7 +12,7 @@ waitContainerUp()
     done
 }
 
-docker-compose up -d --build
+docker-compose up -d --build product-list
 waitContainerUp arango $DEFAULT_LIMIT
 docker-compose exec product-list composer update -vvv
 docker-compose exec arango sh /opt/tools/init.sh
